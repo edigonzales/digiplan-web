@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Kanton Solothurn • digiPlan</title>
+    <h:outputStylesheet library="webjars" name="primeflex/2.0.0/primeflex.min.css" />
+</h:head>
+
+<h:body>
+    <h2>Filter / Suche</h2>
+    
+    <div class="card ui-fluid">
+        <h:form>
+            <div class="p-formgrid p-grid">    
+                <div class="p-field p-col-12 p-md-3">
+                    <p:outputLabel for="gemeinde" >Gemeinde</p:outputLabel>
+                    <p:inputText id="gemeinde" />
+                </div>
+                <div class="p-field p-col-12 p-md-3">
+                    <p:outputLabel for="dokumenttyp">Dokumenttyp</p:outputLabel>
+                    <!--<p:inputText id="dokumenttyp" />-->
+                                
+                    <p:selectOneMenu id="dokumenttyp" value="#{helloWorldBacking.selectedDocumentType}">
+                        <f:selectItem itemLabel="" itemValue="#{null}"/>
+                        <f:selectItems value="#{helloWorldBacking.documentTypes.entrySet()}" var="entry"
+                            itemLabel="#{entry.value}" itemValue="#{entry.key}"
+                        />
+                    </p:selectOneMenu>
+    
+                    
+                </div>
+                <div class="p-field p-col-12 p-md-3">
+                    <p:outputLabel for="rechtsstatus" >Rechtsstatus</p:outputLabel>
+                    <p:inputText id="rechtsstatus" />
+                </div>
+                <div class="p-field p-col-12 p-md-3">
+                </div>
+                <div class="p-field p-col-12 p-md-3">
+                    <label for="fts">Titel / Stichwort / RRB-Nr.</label>
+                    <input id="fts" type="text" />
+                </div>
+                <div class="p-field p-col-12 p-md-2">
+                    <label for="vonDatum">Genehmigungsdatum (RRB-Datum)</label>
+                    <input id="vonDatum" type="date" class="inputfield w-full" />
+                </div>
+                <div class="p-field p-col-12 p-md-2">
+                    <label for="vonDatum">&nbsp;</label>
+                    <input id="bisDatum" type="date" class="inputfield w-full" />
+                </div>
+                <div class="p-field p-col-12 p-md-2">
+                    <label for="planungsbehoerde">Planungsbehörde</label>
+                    <input id="planungsbehoerde" type="text" class="inputfield w-full" />
+                </div>
+                <div class="p-field p-col-12 p-md-2">
+                    <label for="amt">Zuständiges Amt</label>
+                    <input id="amt" type="text" class="inputfield w-full" />
+                </div>
+        
+                
+                <!--
+                <div class="field col-12 md:col-3">
+                    <label for="state">State</label>
+                    <select id="state" class="w-full inputfield" style="appearance: auto">
+                        <option>Arizona</option>
+                        <option>California</option>
+                        <option>Florida</option>
+                        <option>Ohio</option>
+                        <option>Washington</option>
+                    </select>
+                </div>
+                <div class="field col-12 md:col-3">
+                    <label for="zip">Zip</label>
+                    <input id="zip" type="text" class="inputfield w-full" />
+                </div>
+                -->
+            </div>
+            
+                <h:commandButton value="Submit" action="#{helloWorldBacking.submit}" />
+            
+        </h:form>
+    </div>
+
+    
+
+    <h:form id="helloworld-form">
+
+        <p:panel header="PrimeFaces Hello World Example">
+            <h:panelGrid columns="2" cellpadding="4">
+                <h:outputText value="First Name: " />
+                <p:inputText id="first-name" value="#{helloWorldBacking.firstName}" />
+
+                <h:outputText value="Last Name: " />
+                <p:inputText id="last-name" value="#{helloWorldBacking.lastName}" />
+
+                <p:commandButton id="submit" value="Submit" update="greeting-panel"
+                    oncomplete="PF('greetingDialog').show()" />
+            </h:panelGrid>
+        </p:panel>
+
+        <p:dialog header="Greeting" widgetVar="greetingDialog" modal="true"
+            resizable="false">
+            <h:panelGrid id="greeting-panel" columns="1" cellpadding="4">
+                <h:outputText value="#{helloWorldBacking.showGreeting()}" />
+            </h:panelGrid>
+        </p:dialog>
+
+    </h:form>
+</h:body>
+</html>
