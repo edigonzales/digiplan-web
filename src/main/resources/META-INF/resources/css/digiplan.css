@@ -12,6 +12,7 @@ body {
 /* Schriftart für alle Primefaces Widgets ändern */
 .ui-widget, .ui-widget .ui-widget {
     font-family: Frutiger, Roboto, Arial, "Noto Sans", sans-serif !important;
+    font-size: 1rem !important;
 }
 
 /* Höhe des Dropdown der Combobox vergrössern */

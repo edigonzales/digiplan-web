@@ -27,24 +27,29 @@
 	    <h3>Filter / Suche</h3>
 	    
 	    <div class="card ui-fluid">
-	        <h:form>
+	        <h:form id="searchform">
 	            <div class="p-formgrid p-grid">    
+
 	                <div class="p-field p-col-12 p-md-3">
 	                    <p:outputLabel for="gemeinde" >Gemeinde</p:outputLabel>
-	                    <p:inputText id="gemeinde" />
+	                    <!-- <p:inputText id="gemeinde" />-->
+                        <p:selectOneMenu id="gemeinde" value="#{helloWorldBacking.selectedMunicipality}">
+                            <f:selectItem itemLabel="" itemValue="#{null}"/>
+                            <f:selectItems value="#{helloWorldBacking.municipalities}" />
+                        </p:selectOneMenu>
 	                </div>
+
 	                <div class="p-field p-col-12 p-md-3">
 	                    <p:outputLabel for="dokumenttyp">Dokumenttyp</p:outputLabel>
 	                    <!--<p:inputText id="dokumenttyp" />-->
-	                                
 	                    <p:selectOneMenu id="dokumenttyp" value="#{helloWorldBacking.selectedDocumentType}">
 	                        <f:selectItem itemLabel="" itemValue="#{null}"/>
 	                        <f:selectItems value="#{helloWorldBacking.documentTypes.entrySet()}" var="entry"
 	                            itemLabel="#{entry.value}" itemValue="#{entry.key}"
 	                        />
 	                    </p:selectOneMenu>
-	    
 	                </div>
+	                
 	                <div class="p-field p-col-12 p-md-3">
 	                    <p:outputLabel for="rechtsstatus" >Rechtsstatus</p:outputLabel>
 	                    <p:inputText id="rechtsstatus" />
@@ -58,7 +63,11 @@
                     </div>
                     
                     <div class="p-field p-col-12 p-md-3">
-                        <p:commandButton id="foo" value="Reset" process="@none" update="msgs" action="#{helloWorldBacking.submit}" resetValues="true" />
+                        <p:commandLink>
+                           <i class="pi pi-refresh"></i>
+                           <span>Suche zurücksetzen</span>
+                            <f:ajax render="searchform" resetValues="true"/>
+                        </p:commandLink>
                     </div>
 
 <!--                     
@@ -70,16 +79,31 @@
                     </div>
 -->
                     <div class="p-field p-col-12 p-md-3">
-                        foo
+                        &nbsp;
                     </div>                    
                     <div class="p-field p-col-12 p-md-3">
-                        foo
+                        &nbsp;
                     </div>
                     <div class="p-field p-col-12 p-md-3" style="text-align:right;">
-                        <p:commandButton id="submit" value="Suchen" action="#{helloWorldBacking.submit}" />
+                        <p:commandButton id="submit" value="Suchen" update="documents_table" action="#{helloWorldBacking.submit}" />
                     </div>
                     
 	                <p:divider />
+	                
+			        <p:dataTable id="documents_table" var="document" value="#{helloWorldBacking.documents}">
+			            <p:column headerText="Gemeinde">
+			                <h:outputText value="#{document.gemeindename}" />
+			            </p:column>
+			
+			            <p:column headerText="Dokumenttyp">
+			                <h:outputText value="#{document.typTxt}" />
+			            </p:column>
+			
+			            <p:column headerText="Titel">
+			                <h:outputText value="#{document.offiziellerTitel}" />
+			            </p:column>
+			        </p:dataTable>
+
 	                
 	                <!-- 
 	                <div class="p-field p-col-12 p-md-3">

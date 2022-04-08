@@ -1,5 +1,7 @@
 package ch.so.arp.digiplanweb.repository;
 
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -24,7 +26,13 @@ public class DokumentRepository {
     }
     
     public List<Dokument> findAll() {
-        String sql = "SELECT * FROM dokument";
+        String sql = "SELECT * FROM dokument ORDER BY gemeindename, offiziellertitel";
         return jdbcTemplate.query(sql, new DokumentRowMapper());        
+    }
+    
+    public LinkedList<Dokument> findByFilter(HashMap<String, String> filter) {
+        
+        
+        return null;
     }
 }
