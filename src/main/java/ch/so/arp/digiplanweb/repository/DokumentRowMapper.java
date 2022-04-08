@@ -31,7 +31,6 @@ public class DokumentRowMapper implements RowMapper<Dokument> {
                     rs.getInt("miny"),
                     rs.getInt("maxx"),
                     rs.getInt("maxy")
-
                 );
         return dokument;
     }

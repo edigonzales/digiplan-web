@@ -8,86 +8,129 @@
 <h:head>
     <title>Kanton Solothurn • digiPlan</title>
     <h:outputStylesheet library="webjars" name="primeflex/2.0.0/primeflex.min.css" />
+    <h:outputStylesheet name="css/fonts.css"/>
+    <h:outputStylesheet name="css/digiplan.css"/>
 </h:head>
 
 <h:body>
-    <h2>Filter / Suche</h2>
-    
-    <div class="card ui-fluid">
-        <h:form>
-            <div class="p-formgrid p-grid">    
-                <div class="p-field p-col-12 p-md-3">
-                    <p:outputLabel for="gemeinde" >Gemeinde</p:outputLabel>
-                    <p:inputText id="gemeinde" />
-                </div>
-                <div class="p-field p-col-12 p-md-3">
-                    <p:outputLabel for="dokumenttyp">Dokumenttyp</p:outputLabel>
-                    <!--<p:inputText id="dokumenttyp" />-->
-                                
-                    <p:selectOneMenu id="dokumenttyp" value="#{helloWorldBacking.selectedDocumentType}">
-                        <f:selectItem itemLabel="" itemValue="#{null}"/>
-                        <f:selectItems value="#{helloWorldBacking.documentTypes.entrySet()}" var="entry"
-                            itemLabel="#{entry.value}" itemValue="#{entry.key}"
-                        />
-                    </p:selectOneMenu>
-    
-                    
-                </div>
-                <div class="p-field p-col-12 p-md-3">
-                    <p:outputLabel for="rechtsstatus" >Rechtsstatus</p:outputLabel>
-                    <p:inputText id="rechtsstatus" />
-                </div>
-                <div class="p-field p-col-12 p-md-3">
-                </div>
-                <div class="p-field p-col-12 p-md-3">
-                    <label for="fts">Titel / Stichwort / RRB-Nr.</label>
-                    <input id="fts" type="text" />
-                </div>
-                <div class="p-field p-col-12 p-md-2">
-                    <label for="vonDatum">Genehmigungsdatum (RRB-Datum)</label>
-                    <input id="vonDatum" type="date" class="inputfield w-full" />
-                </div>
-                <div class="p-field p-col-12 p-md-2">
-                    <label for="vonDatum">&nbsp;</label>
-                    <input id="bisDatum" type="date" class="inputfield w-full" />
-                </div>
-                <div class="p-field p-col-12 p-md-2">
-                    <label for="planungsbehoerde">Planungsbehörde</label>
-                    <input id="planungsbehoerde" type="text" class="inputfield w-full" />
-                </div>
-                <div class="p-field p-col-12 p-md-2">
-                    <label for="amt">Zuständiges Amt</label>
-                    <input id="amt" type="text" class="inputfield w-full" />
-                </div>
-        
-                
-                <!--
-                <div class="field col-12 md:col-3">
-                    <label for="state">State</label>
-                    <select id="state" class="w-full inputfield" style="appearance: auto">
-                        <option>Arizona</option>
-                        <option>California</option>
-                        <option>Florida</option>
-                        <option>Ohio</option>
-                        <option>Washington</option>
-                    </select>
-                </div>
-                <div class="field col-12 md:col-3">
-                    <label for="zip">Zip</label>
-                    <input id="zip" type="text" class="inputfield w-full" />
-                </div>
-                -->
+    <div id="container">
+        <div class="logo">
+            <div>
+                <img id="logo" src="img/Logo.png" alt="Logo Kanton Solothurn"/>
             </div>
-            
-                <h:commandButton value="Submit" action="#{helloWorldBacking.submit}" />
-            
-        </h:form>
+        </div>
+
+        <h2>Planregister</h2>
+
+        <p:divider />
+
+	    <h3>Filter / Suche</h3>
+	    
+	    <div class="card ui-fluid">
+	        <h:form>
+	            <div class="p-formgrid p-grid">    
+	                <div class="p-field p-col-12 p-md-3">
+	                    <p:outputLabel for="gemeinde" >Gemeinde</p:outputLabel>
+	                    <p:inputText id="gemeinde" />
+	                </div>
+	                <div class="p-field p-col-12 p-md-3">
+	                    <p:outputLabel for="dokumenttyp">Dokumenttyp</p:outputLabel>
+	                    <!--<p:inputText id="dokumenttyp" />-->
+	                                
+	                    <p:selectOneMenu id="dokumenttyp" value="#{helloWorldBacking.selectedDocumentType}">
+	                        <f:selectItem itemLabel="" itemValue="#{null}"/>
+	                        <f:selectItems value="#{helloWorldBacking.documentTypes.entrySet()}" var="entry"
+	                            itemLabel="#{entry.value}" itemValue="#{entry.key}"
+	                        />
+	                    </p:selectOneMenu>
+	    
+	                </div>
+	                <div class="p-field p-col-12 p-md-3">
+	                    <p:outputLabel for="rechtsstatus" >Rechtsstatus</p:outputLabel>
+	                    <p:inputText id="rechtsstatus" />
+	                </div>
+
+                    <div class="p-field p-col-12 p-md-3">
+                    </div>
+
+                    <div class="p-field p-col-12 p-md-12">
+                        &nbsp;
+                    </div>
+                    
+                    <div class="p-field p-col-12 p-md-3">
+                        <p:commandButton id="foo" value="Reset" process="@none" update="msgs" action="#{helloWorldBacking.submit}" resetValues="true" />
+                    </div>
+
+<!--                     
+                    <div class="p-field p-col-12 p-md-3">
+	                    <p:commandLink>
+	                       <i class="pi pi-refresh"></i>
+	                       <span>Suche zurücksetzen</span>
+	                    </p:commandLink>
+                    </div>
+-->
+                    <div class="p-field p-col-12 p-md-3">
+                        foo
+                    </div>                    
+                    <div class="p-field p-col-12 p-md-3">
+                        foo
+                    </div>
+                    <div class="p-field p-col-12 p-md-3" style="text-align:right;">
+                        <p:commandButton id="submit" value="Suchen" action="#{helloWorldBacking.submit}" />
+                    </div>
+                    
+	                <p:divider />
+	                
+	                <!-- 
+	                <div class="p-field p-col-12 p-md-3">
+	                    <label for="fts">Titel / Stichwort / RRB-Nr.</label>
+	                    <input id="fts" type="text" />
+	                </div>
+	                <div class="p-field p-col-12 p-md-2">
+	                    <label for="vonDatum">Genehmigungsdatum (RRB-Datum)</label>
+	                    <input id="vonDatum" type="date" class="inputfield w-full" />
+	                </div>
+	                <div class="p-field p-col-12 p-md-2">
+	                    <label for="vonDatum">&nbsp;</label>
+	                    <input id="bisDatum" type="date" class="inputfield w-full" />
+	                </div>
+	                <div class="p-field p-col-12 p-md-2">
+	                    <label for="planungsbehoerde">Planungsbehörde</label>
+	                    <input id="planungsbehoerde" type="text" class="inputfield w-full" />
+	                </div>
+	                <div class="p-field p-col-12 p-md-2">
+	                    <label for="amt">Zuständiges Amt</label>
+	                    <input id="amt" type="text" class="inputfield w-full" />
+	                </div>
+	                 -->
+	                
+	                <!--
+	                <div class="field col-12 md:col-3">
+	                    <label for="state">State</label>
+	                    <select id="state" class="w-full inputfield" style="appearance: auto">
+	                        <option>Arizona</option>
+	                        <option>California</option>
+	                        <option>Florida</option>
+	                        <option>Ohio</option>
+	                        <option>Washington</option>
+	                    </select>
+	                </div>
+	                <div class="field col-12 md:col-3">
+	                    <label for="zip">Zip</label>
+	                    <input id="zip" type="text" class="inputfield w-full" />
+	                </div>
+	                -->
+	            </div>
+	            
+	                
+	            <p:messages id="msgs"/>
+	            
+	            
+	        </h:form>
+	    </div>
     </div>
 
-    
-
     <h:form id="helloworld-form">
-
         <p:panel header="PrimeFaces Hello World Example">
             <h:panelGrid columns="2" cellpadding="4">
                 <h:outputText value="First Name: " />
@@ -107,7 +150,8 @@
                 <h:outputText value="#{helloWorldBacking.showGreeting()}" />
             </h:panelGrid>
         </p:dialog>
-
     </h:form>
+    
+    
 </h:body>
 </html>

@@ -1,0 +1,93 @@
+html {
+    color: #333333;
+}
+                
+body {
+	padding: 14px;
+    /*font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";*/
+    font-family: Frutiger, Roboto, Arial, "Noto Sans", sans-serif;
+    font-size: 1rem;
+}
+
+/* Schriftart für alle Primefaces Widgets ändern */
+.ui-widget, .ui-widget .ui-widget {
+    font-family: Frutiger, Roboto, Arial, "Noto Sans", sans-serif !important;
+}
+
+/* Höhe des Dropdown der Combobox vergrössern */
+.ui-selectonemenu-items-wrapper {
+    max-height: 600px !important;
+}
+
+/* Highlighing-Farbe in den Dropdown  */
+body .ui-selectonemenu-panel .ui-selectonemenu-items .ui-selectonemenu-item.ui-state-highlight {
+    /*background-color: rgba(204,0,0,0.2) !important;*/       
+    background-color: white !important;       
+    color: #495057;
+    overflow: auto;
+}
+
+/* Farbe der Box von Inputtext-Field */ 
+.ui-inputfield { 
+	box-shadow: none !important;
+}
+
+/* Rahmenfarbe von Inputtext-Field */
+.ui-inputfield.ui-state-hover { 
+    border-color: #CC0000 !important; 
+}
+
+/* Rahmenfarbe von Inputtext-Field */
+.ui-inputfield.ui-state-focus { 
+    border-color: #CC0000 !important; 
+}
+
+/* Farbe der Box von Combobox-Field */ 
+.ui-selectonemenu { 
+    box-shadow: none !important;
+}
+
+/* Rahmenfarbe von Combobox-Field */
+/* .ui-selectonemenu.ui-state-hover 
+Testweise ohne selectonemenu, dann gilt es für alle */
+.ui-state-hover { 
+    border-color: #CC0000 !important; 
+}
+
+/* Rahmenfarbe von Combobox-Field */
+.ui-state-focus { 
+    border-color: #CC0000 !important; 
+}
+
+.ui-button {
+    background-color: #CC0000 !important;
+    border-color: #CC0000 !important;
+    color: white !important;
+}
+
+.ui-button.ui-state-focus {
+    box-shadow: none !important;
+}
+
+.ui-commandlink, .ui-link{
+	color: #CC0000 !important;
+}
+
+#container {
+    margin-left: auto;
+    margin-right: auto;
+    width: 1400px;
+    max-width: 95%;
+    background-color: #FFFFFF;        
+}
+
+.logo {
+    margin-top: 20px;
+    text-align: right;
+    min-width: 50px;
+}
+
+#logo {
+    max-width: 100%;
+    min-width: 200px;     
+}
