@@ -30,9 +30,14 @@ public class DokumentRepository {
         return jdbcTemplate.query(sql, new DokumentRowMapper());        
     }
     
+    public List<Dokument> findAll(int limit, int offset) {
+        String sql = "SELECT * FROM dokument ORDER BY gemeindename, offiziellertitel LIMIT ? OFFSET ?";
+        System.out.println(sql);
+        return jdbcTemplate.query(sql, new DokumentRowMapper(), limit, offset);        
+        
+    }
+     
     public LinkedList<Dokument> findByFilter(HashMap<String, String> filter) {
-        
-        
         return null;
     }
 }

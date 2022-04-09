@@ -63,21 +63,15 @@
                     </div>
                     
                     <div class="p-field p-col-12 p-md-3">
-                        <p:commandLink>
+                        <p:commandLink id="reset" process="@this" update="documents_table dokumenttyp" action="#{helloWorldBacking.resetTable}">
                            <i class="pi pi-refresh"></i>
                            <span>Suche zurücksetzen</span>
-                            <f:ajax render="searchform" resetValues="true"/>
+                            <!-- <f:ajax render="searchform" resetValues="true"/>-->
+                             <p:resetInput target="dokumenttyp"/>
                         </p:commandLink>
+                        
                     </div>
 
-<!--                     
-                    <div class="p-field p-col-12 p-md-3">
-	                    <p:commandLink>
-	                       <i class="pi pi-refresh"></i>
-	                       <span>Suche zurücksetzen</span>
-	                    </p:commandLink>
-                    </div>
--->
                     <div class="p-field p-col-12 p-md-3">
                         &nbsp;
                     </div>                    
@@ -90,7 +84,15 @@
                     
 	                <p:divider />
 	                
-			        <p:dataTable id="documents_table" var="document" value="#{helloWorldBacking.documents}">
+	                
+			        <p:dataTable id="documents_table" var="document" value="#{helloWorldBacking.documentModel}"
+			            stripedRows="true"
+                        paginator="true" rows="10"
+                        paginatorTemplate=
+                            "{RowsPerPageDropdown} {FirstPageLink}
+                            {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                        rowsPerPageTemplate="5,10,15" lazy="true">
+
 			            <p:column headerText="Gemeinde">
 			                <h:outputText value="#{document.gemeindename}" />
 			            </p:column>
@@ -98,10 +100,34 @@
 			            <p:column headerText="Dokumenttyp">
 			                <h:outputText value="#{document.typTxt}" />
 			            </p:column>
+
+                        <p:column headerText="Nummer" width="10%">
+                            <h:outputText value="#{document.offizielleNummer}" />
+                        </p:column>
+
+                        <p:column headerText="RRB-Datum" width="10%">
+                            <h:outputText value="#{document.publiziertAb}">
+                                <f:convertDateTime pattern="dd.MM.yyyy" />
+                            </h:outputText>
+                        </p:column>
 			
-			            <p:column headerText="Titel">
-			                <h:outputText value="#{document.offiziellerTitel}" />
+			            <p:column headerText="Links" width="5%">
+			                <h:outputLink value="#{document.textImWeb}" target="_blank" style="text-align:center;">
+                                <h:outputText class="pi pi-file-pdf"/>   
+                            </h:outputLink>
+                            /  
+                            <h:outputLink value="https://geo.so.ch/map #{document.minX}" target="_blank" style="text-align:center;">
+                                <h:outputText class="pi pi-map-marker"/>   
+                            </h:outputLink>
+                            
+                            <!-- bbox.width * 2 = scale -->
+                            
 			            </p:column>
+
+                        <p:column headerText="Titel" width="30%">
+                            <h:outputText value="#{document.offiziellerTitel}" />
+                        </p:column>
+
 			        </p:dataTable>
 
 	                
@@ -154,28 +180,6 @@
 	    </div>
     </div>
 
-    <h:form id="helloworld-form">
-        <p:panel header="PrimeFaces Hello World Example">
-            <h:panelGrid columns="2" cellpadding="4">
-                <h:outputText value="First Name: " />
-                <p:inputText id="first-name" value="#{helloWorldBacking.firstName}" />
-
-                <h:outputText value="Last Name: " />
-                <p:inputText id="last-name" value="#{helloWorldBacking.lastName}" />
-
-                <p:commandButton id="submit" value="Submit" update="greeting-panel"
-                    oncomplete="PF('greetingDialog').show()" />
-            </h:panelGrid>
-        </p:panel>
-
-        <p:dialog header="Greeting" widgetVar="greetingDialog" modal="true"
-            resizable="false">
-            <h:panelGrid id="greeting-panel" columns="1" cellpadding="4">
-                <h:outputText value="#{helloWorldBacking.showGreeting()}" />
-            </h:panelGrid>
-        </p:dialog>
-    </h:form>
-    
     
 </h:body>
 </html>

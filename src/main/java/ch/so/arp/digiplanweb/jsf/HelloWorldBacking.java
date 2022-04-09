@@ -10,8 +10,11 @@ import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
+import org.primefaces.component.datatable.DataTable;
+import org.primefaces.model.LazyDataModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +40,9 @@ public class HelloWorldBacking {
     @Autowired
     DokumentRepository dokumentRepository;
 
-    private String firstName = "John";
-    private String lastName = "Doe";
-    private String txt2;
+//    private String firstName = "John";
+//    private String lastName = "Doe";
+//    private String txt2;
     
     private String selectedMunicipality;
 
@@ -47,10 +50,11 @@ public class HelloWorldBacking {
 
     private LinkedList<Dokument> documents;
     
+    private DocumentLazyDataModel documentLazyDataModel; //= new DocumentLazyDataModel();
+    
     @PostConstruct
     public void init() {
-        // Damit beim ersten Aufruf die Dokumente gelistet werden.
-        //products = service.getProducts(10);
+        documentLazyDataModel = new DocumentLazyDataModel(dokumentRepository);
     }
        
     public String getSelectedDocumentType() {
@@ -69,45 +73,21 @@ public class HelloWorldBacking {
         this.selectedMunicipality = selectedMunicipality;
     }
     
-    public LinkedList<Dokument> getDocuments() {
-        System.out.println("FOOOO");
-        if (documents != null) {
-            System.out.println(documents.size());            
-        }
-        return documents;
-    }
-
-    public void setDocuments(LinkedList<Dokument> documents) {
-        this.documents = documents;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String showGreeting() {
-        return "Hello " + firstName + " " + lastName + "!";
-    }
+//    public LinkedList<Dokument> getDocuments() {
+//        System.out.println("FOOOO");
+//        if (documents != null) {
+//            System.out.println(documents.size());            
+//        }
+//        return documents;
+//    }
+//
+//    public void setDocuments(LinkedList<Dokument> documents) {
+//        this.documents = documents;
+//    }
     
-    public String getTxt2() {
-        return txt2;
-    }
-
-    public void setTxt2(String txt2) {
-        logger.info("set txt2");
-        this.txt2 = txt2;
+    public LazyDataModel<Dokument> getDocumentModel() {
+        System.out.println("getDocumentModel");
+        return this.documentLazyDataModel;
     }
     
     public List<String> completeText(String query) {
@@ -141,15 +121,29 @@ public class HelloWorldBacking {
         return dokumentTypMap;
     }
     
+    public void resetTable() {
+        logger.info("reset table");
+        DataTable dataTable = (DataTable) FacesContext.getCurrentInstance().getViewRoot().findComponent("searchform:documents_table");
+        dataTable.reset();
+    }
+    
     public void submit() {
-        System.out.println("selectedMunicipality:" + selectedMunicipality + "**");
-        System.out.println("selectedDocumentType:" + selectedDocumentType + "**");
+        logger.info("selectedMunicipality:" + selectedMunicipality + "**");
+        logger.info("selectedDocumentType:" + selectedDocumentType + "**");
+
+        documentLazyDataModel.setFilter();
         
         
-        documents = new LinkedList<Dokument>();
-        documents.addAll(dokumentRepository.findAll());
         
-        System.out.println(documents.size());
+        DataTable dataTable = (DataTable) FacesContext.getCurrentInstance().getViewRoot().findComponent("searchform:documents_table");
+        System.out.println(dataTable);
+        dataTable.reset();
+  
+        
+//        documents = new LinkedList<Dokument>();
+//        documents.addAll(dokumentRepository.findAll());
+//        
+//        System.out.println(documents.size());
     }
 
 }
