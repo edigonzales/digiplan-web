@@ -1,18 +1,18 @@
 package ch.so.arp.digiplanweb.jsf;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
+import org.primefaces.PrimeFaces;
 import org.primefaces.component.datatable.DataTable;
 import org.primefaces.model.LazyDataModel;
 import org.slf4j.Logger;
@@ -27,7 +27,10 @@ import ch.so.arp.digiplanweb.repository.DokumentTypRepository;
 import ch.so.arp.digiplanweb.repository.GemeindeRepository;
 
 @Named
-@RequestScoped
+// Bei RequestScoped funktioniert das Paging nicht. Die Filter gehen vergessen.
+@SessionScoped
+//@RequestScoped
+//@ViewScoped
 public class HelloWorldBacking {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -39,18 +42,14 @@ public class HelloWorldBacking {
 
     @Autowired
     DokumentRepository dokumentRepository;
-
-//    private String firstName = "John";
-//    private String lastName = "Doe";
-//    private String txt2;
     
     private String selectedMunicipality;
 
     private String selectedDocumentType;
 
-    private LinkedList<Dokument> documents;
+    private DocumentLazyDataModel documentLazyDataModel; 
     
-    private DocumentLazyDataModel documentLazyDataModel; //= new DocumentLazyDataModel();
+    private HashMap<String,String> filters = new HashMap<>();
     
     @PostConstruct
     public void init() {
@@ -61,8 +60,14 @@ public class HelloWorldBacking {
         return selectedDocumentType;
     }
 
+    // TODO:
+    // Vorbereites FilterObjekt mit Keys der erlaubten Filter?
+    
     public void setSelectedDocumentType(String selectedDocumentType) {
         this.selectedDocumentType = selectedDocumentType;
+        if (!selectedDocumentType.isBlank()) {
+            filters.put("typ", selectedDocumentType);
+        }
     }
 
     public String getSelectedMunicipality() {
@@ -71,36 +76,26 @@ public class HelloWorldBacking {
 
     public void setSelectedMunicipality(String selectedMunicipality) {
         this.selectedMunicipality = selectedMunicipality;
+        if (!selectedMunicipality.isBlank()) {
+            filters.put("gemeindename", selectedMunicipality);
+        }
     }
-    
-//    public LinkedList<Dokument> getDocuments() {
-//        System.out.println("FOOOO");
-//        if (documents != null) {
-//            System.out.println(documents.size());            
-//        }
-//        return documents;
-//    }
-//
-//    public void setDocuments(LinkedList<Dokument> documents) {
-//        this.documents = documents;
-//    }
-    
+        
     public LazyDataModel<Dokument> getDocumentModel() {
-        System.out.println("getDocumentModel");
         return this.documentLazyDataModel;
     }
     
-    public List<String> completeText(String query) {
-        logger.info("Query: " + query);
-        String queryLowerCase = query.toLowerCase();
-        List<String> dokumentTypList = new ArrayList<>();
-        List<DokumentTyp> dokumentTypen = dokumentTypRepository.findAll();
-        for (DokumentTyp dokumentTyp : dokumentTypen) {
-            dokumentTypList.add(dokumentTyp.dispName());
-        }
-
-        return dokumentTypList.stream().filter(t -> t.toLowerCase().startsWith(queryLowerCase)).collect(Collectors.toList());
-    }
+//    public List<String> completeText(String query) {
+//        logger.info("Query: " + query);
+//        String queryLowerCase = query.toLowerCase();
+//        List<String> dokumentTypList = new ArrayList<>();
+//        List<DokumentTyp> dokumentTypen = dokumentTypRepository.findAll();
+//        for (DokumentTyp dokumentTyp : dokumentTypen) {
+//            dokumentTypList.add(dokumentTyp.dispName());
+//        }
+//
+//        return dokumentTypList.stream().filter(t -> t.toLowerCase().startsWith(queryLowerCase)).collect(Collectors.toList());
+//    }
     
     public LinkedList<String> getMunicipalities() {
         LinkedList<String> gemeinden = new LinkedList<>();
@@ -121,29 +116,38 @@ public class HelloWorldBacking {
         return dokumentTypMap;
     }
     
-    public void resetTable() {
-        logger.info("reset table");
+    public void reset() {
         DataTable dataTable = (DataTable) FacesContext.getCurrentInstance().getViewRoot().findComponent("searchform:documents_table");
         dataTable.reset();
+        
+        //PrimeFaces.current().ajax().update("searchform:documents_table");
+
+        // TODO: Das ist der Vorschlaghammer? Funktioniert nicht, wenn man z.B. eingeloggt ist.
+        // Sonst werden jedoch die Inputs nicht geresettet.
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
     }
     
-    public void submit() {
-        logger.info("selectedMunicipality:" + selectedMunicipality + "**");
-        logger.info("selectedDocumentType:" + selectedDocumentType + "**");
-
-        documentLazyDataModel.setFilter();
+    /*
+     * Weil der Filter allenfalls ändert, muss alles was die Tabelle betrifft auf
+     * der Serverseite getriggert werden. D.h. vor allem auch das Refreshen/Updaten, 
+     * welches sonst im p:commandButton mit update="documents_table" gemacht werden
+     * kann und man so die Reihenfolge der einzelnen Prozesse nicht garantierten kann:
+     * Das Updaten der Tabelle muss nach dem Setzen des Filters passieren.
+     */
+    public void submit() {  
         
+        // TODO: 
+        // Wenn man die Gemeinde wieder "wegwählt" wird der Filter nicht zurückgesetzt.
+        // -> FIXME
+        logger.info("selectedDocumentType: " + selectedDocumentType + "**");
+        logger.info("selectedMunicipality: " + selectedMunicipality + "**");
         
-        
+        documentLazyDataModel.setFilter(filters);
+    
         DataTable dataTable = (DataTable) FacesContext.getCurrentInstance().getViewRoot().findComponent("searchform:documents_table");
-        System.out.println(dataTable);
         dataTable.reset();
-  
         
-//        documents = new LinkedList<Dokument>();
-//        documents.addAll(dokumentRepository.findAll());
-//        
-//        System.out.println(documents.size());
+        PrimeFaces.current().ajax().update("searchform:documents_table");        
     }
 
 }

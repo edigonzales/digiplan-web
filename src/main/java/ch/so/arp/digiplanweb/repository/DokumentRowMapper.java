@@ -30,7 +30,10 @@ public class DokumentRowMapper implements RowMapper<Dokument> {
         dokument.setMinX(rs.getInt("minx"));
         dokument.setMinY(rs.getInt("miny"));
         dokument.setMaxX(rs.getInt("maxx"));
-        dokument.setMaxY(rs.getInt("maxy"));        
+        dokument.setMaxY(rs.getInt("maxy"));  
+        dokument.setAvgX(rs.getInt("avgx"));
+        dokument.setAvgY(rs.getInt("avgy"));
+        dokument.setScale(rs.getInt("ascale"));
         return dokument;
     }
 

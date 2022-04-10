@@ -22,6 +22,9 @@ public class Dokument {
     private int minY;
     private int maxX;
     private int maxY;
+    private int avgX;
+    private int avgY;
+    private int scale;
     
     public int getTid() {
         return tid;
@@ -137,6 +140,22 @@ public class Dokument {
     public void setMaxY(int maxY) {
         this.maxY = maxY;
     }
-
-    
+    public int getAvgX() {
+        return avgX;
+    }
+    public void setAvgX(int avgX) {
+        this.avgX = avgX;
+    }
+    public int getAvgY() {
+        return avgY;
+    }
+    public void setAvgY(int avgY) {
+        this.avgY = avgY;
+    }
+    public int getScale() {
+        return scale;
+    }
+    public void setScale(int scale) {
+        this.scale = scale;
+    }
 }

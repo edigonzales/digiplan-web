@@ -36,11 +36,11 @@ public class MainController {
         return new ResponseEntity<String>("digiplan-web", HttpStatus.OK);
     }
     
-    @GetMapping("/dokument")
-    public ResponseEntity<String> dokument() {
-        List<Dokument> dokumente = dokumentRepository.findAll();
-        return new ResponseEntity<String>(String.valueOf(dokumente.size()), HttpStatus.OK);
-    }
+//    @GetMapping("/dokument")
+//    public ResponseEntity<String> dokument() {
+//        List<Dokument> dokumente = dokumentRepository.findAll();
+//        return new ResponseEntity<String>(String.valueOf(dokumente.size()), HttpStatus.OK);
+//    }
 
     @GetMapping("/dokumenttyp")
     public ResponseEntity<String> dokumentTyp() {

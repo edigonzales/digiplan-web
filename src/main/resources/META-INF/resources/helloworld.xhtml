@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
     xmlns:p="http://primefaces.org/ui">
 
 <h:head>
@@ -63,11 +64,11 @@
                     </div>
                     
                     <div class="p-field p-col-12 p-md-3">
-                        <p:commandLink id="reset" process="@this" update="gemeinde dokumenttyp documents_table" action="#{helloWorldBacking.resetTable}">
+                        <p:commandLink id="reset" process="@this" update="gemeinde dokumenttyp documents_table" action="#{helloWorldBacking.reset}">
                            <i class="pi pi-refresh"></i>
                            <span>Suche zurücksetzen</span>
-                            <!-- <f:ajax render="searchform" resetValues="true"/>-->
-                             <p:resetInput target="gemeinde dokumenttyp"/>
+                              <!-- <f:ajax render="searchform" resetValues="true"/>  -->
+                              <p:resetInput target="gemeinde dokumenttyp"/>
                         </p:commandLink>
                         
                     </div>
@@ -79,7 +80,8 @@
                         &nbsp;
                     </div>
                     <div class="p-field p-col-12 p-md-3" style="text-align:right;">
-                        <p:commandButton id="submit" value="Suchen" update="documents_table" action="#{helloWorldBacking.submit}" />
+                        <!-- update="documents_table"  -->
+                        <p:commandButton id="submit" value="Suchen" action="#{helloWorldBacking.submit}" />
                     </div>
                     
 	                <p:divider />
@@ -115,13 +117,13 @@
 			                <h:outputLink value="#{document.textImWeb}" target="_blank" style="text-align:center;">
                                 <h:outputText class="pi pi-file-pdf"/>   
                             </h:outputLink>
-                            /  
-                            <h:outputLink value="https://geo.so.ch/map #{document.minX}" target="_blank" style="text-align:center;">
+                            
+                            <h:outputText value=" / " rendered="#{document.avgX != 0}"/>   
+                            
+                            <h:outputLink value="https://geo.so.ch/map/?t=nutzungsplanung&amp;c=#{document.avgX},#{document.avgY}&amp;s=#{document.scale}" rendered="#{document.avgX != 0}" target="_blank" style="text-align:center;">
                                 <h:outputText class="pi pi-map-marker"/>   
                             </h:outputLink>
-                            
-                            <!-- bbox.width * 2 = scale -->
-                            
+                                                        
 			            </p:column>
 
                         <p:column headerText="Titel" width="30%">
@@ -171,10 +173,6 @@
 	                </div>
 	                -->
 	            </div>
-	            
-	                
-	            <p:messages id="msgs"/>
-	            
 	            
 	        </h:form>
 	    </div>
