@@ -63,11 +63,11 @@
                     </div>
                     
                     <div class="p-field p-col-12 p-md-3">
-                        <p:commandLink id="reset" process="@this" update="documents_table dokumenttyp" action="#{helloWorldBacking.resetTable}">
+                        <p:commandLink id="reset" process="@this" update="gemeinde dokumenttyp documents_table" action="#{helloWorldBacking.resetTable}">
                            <i class="pi pi-refresh"></i>
                            <span>Suche zurücksetzen</span>
                             <!-- <f:ajax render="searchform" resetValues="true"/>-->
-                             <p:resetInput target="dokumenttyp"/>
+                             <p:resetInput target="gemeinde dokumenttyp"/>
                         </p:commandLink>
                         
                     </div>
