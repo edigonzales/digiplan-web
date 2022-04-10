@@ -62,11 +62,14 @@ public class HelloWorldBacking {
 
     // TODO:
     // Vorbereites FilterObjekt mit Keys der erlaubten Filter?
+    // Auch das Blank/remove anders lösen?
     
     public void setSelectedDocumentType(String selectedDocumentType) {
         this.selectedDocumentType = selectedDocumentType;
         if (!selectedDocumentType.isBlank()) {
             filters.put("typ", selectedDocumentType);
+        } else {
+            filters.remove("typ");
         }
     }
 
@@ -78,6 +81,8 @@ public class HelloWorldBacking {
         this.selectedMunicipality = selectedMunicipality;
         if (!selectedMunicipality.isBlank()) {
             filters.put("gemeindename", selectedMunicipality);
+        } else {
+            filters.remove("gemeindename");
         }
     }
         
@@ -135,10 +140,6 @@ public class HelloWorldBacking {
      * Das Updaten der Tabelle muss nach dem Setzen des Filters passieren.
      */
     public void submit() {  
-        
-        // TODO: 
-        // Wenn man die Gemeinde wieder "wegwählt" wird der Filter nicht zurückgesetzt.
-        // -> FIXME
         logger.info("selectedDocumentType: " + selectedDocumentType + "**");
         logger.info("selectedMunicipality: " + selectedMunicipality + "**");
         
