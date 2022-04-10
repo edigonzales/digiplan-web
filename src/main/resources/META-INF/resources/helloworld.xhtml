@@ -95,25 +95,25 @@
                             {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                         rowsPerPageTemplate="5,10,15" lazy="true">
 
-			            <p:column headerText="Gemeinde">
+			            <p:column headerText="Gemeinde" width="13%">
 			                <h:outputText value="#{document.gemeindename}" />
 			            </p:column>
 			
-			            <p:column headerText="Dokumenttyp">
+			            <p:column headerText="Dokumenttyp" width="13%">
 			                <h:outputText value="#{document.typTxt}" />
 			            </p:column>
 
-                        <p:column headerText="Nummer" width="10%">
+                        <p:column headerText="Nummer" width="6%">
                             <h:outputText value="#{document.offizielleNummer}" />
                         </p:column>
 
-                        <p:column headerText="RRB-Datum" width="10%">
+                        <p:column headerText="RRB-Datum" width="7%">
                             <h:outputText value="#{document.publiziertAb}">
                                 <f:convertDateTime pattern="dd.MM.yyyy" />
                             </h:outputText>
                         </p:column>
 			
-			            <p:column headerText="Links" width="5%">
+			            <p:column headerText="Links" width="4%">
 			                <h:outputLink value="#{document.textImWeb}" target="_blank" style="text-align:center;">
                                 <h:outputText class="pi pi-file-pdf"/>   
                             </h:outputLink>
@@ -126,7 +126,7 @@
                                                         
 			            </p:column>
 
-                        <p:column headerText="Titel" width="30%">
+                        <p:column headerText="Titel" >
                             <h:outputText value="#{document.offiziellerTitel}" />
                         </p:column>
 
