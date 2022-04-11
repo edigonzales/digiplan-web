@@ -1,0 +1,56 @@
+import ch.so.agi.gretl.api.TransferSet
+import ch.so.agi.gretl.tasks.*
+import java.nio.file.Paths
+import de.undercouch.gradle.tasks.download.Download
+
+apply plugin: "de.undercouch.download"
+apply plugin: "ch.so.agi.gretl"
+
+ext {
+    def bucketSuffix = '-undefined'
+    if ( gretlEnvironment == 'production' ) {
+        bucketSuffix = ''
+    } else if ( gretlEnvironment == 'integration' || gretlEnvironment == 'dev' ) {
+        bucketSuffix = '-' + gretlEnvironment.substring(0, 3)
+    } else {
+        bucketSuffix = '-' + gretlEnvironment
+    }
+
+    pathToTempFolder = System.getProperty("java.io.tmpdir")
+    pathToUnzipFolder = Paths.get(pathToTempFolder, 'unzip_data')
+    pathToUserFolder = System.getProperty("user.dir")
+
+    iliModelDigiplan = "SO_ARP_digiPlan_Publikation_20220402"
+    dbSchemaDigiplan = "arp_digiplan_pub_v1"
+    dataFileDigiplan = "ch.so.arp.digiplan.xtf"
+}
+
+task createSchema_Digiplan(type: Ili2pgImportSchema) {
+    description = "Erstellt Schema für Digiplan"
+    database = [dbUriPub, dbUserPub, dbPwdPub]
+    models = iliModelDigiplan
+    modeldir = file(".")
+    dbschema = dbSchemaDigiplan
+    strokeArcs = true
+    defaultSrsCode = 2056
+    createMetaInfo = true
+    nameByTopic = false
+    createEnumTabs = true
+    createEnumTxtCol = true
+    createNumChecks = true
+}
+
+task importData_Digiplan(type: Ili2pgImport, dependsOn: 'createSchema_Digiplan') {
+    description = "Importiert Digiplan-Daten"
+    database = [dbUriPub, dbUserPub, dbPwdPub]
+    models = iliModelDigiplan
+    dbschema = dbSchemaDigiplan
+    dataFile = file(dataFileDigiplan)
+    disableValidation = true
+}
+
+task createIndex_Digiplan(type: SqlExecutor) {
+    description = "trgrm index"
+    database = [dbUriPub, dbUserPub, dbPwdPub]
+    sqlFiles = ['create_index.sql']
+}

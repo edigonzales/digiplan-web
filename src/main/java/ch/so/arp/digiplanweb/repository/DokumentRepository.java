@@ -24,7 +24,7 @@ public class DokumentRepository {
     private NamedParameterJdbcTemplate jdbcParamTemplate;
     
     // TODO:
-    // Clean code (1x sql)
+    // Clean code (1x sql stmt herstellen)
     
     public int count(HashMap<String,String> filters) {        
         MapSqlParameterSource params = new MapSqlParameterSource();

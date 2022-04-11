@@ -46,6 +46,8 @@ public class HelloWorldBacking {
     private String selectedMunicipality;
 
     private String selectedDocumentType;
+    
+    private String fullTextSearch;
 
     private DocumentLazyDataModel documentLazyDataModel; 
     
@@ -86,6 +88,19 @@ public class HelloWorldBacking {
         }
     }
         
+    public String getFullTextSearch() {
+        return fullTextSearch;
+    }
+
+    public void setFullTextSearch(String fullTextSearch) {
+        this.fullTextSearch = fullTextSearch;
+        if (!fullTextSearch.isBlank()) {
+            filters.put("searchtext", fullTextSearch);
+        } else {
+            filters.remove("searchtext");
+        }
+    }
+
     public LazyDataModel<Dokument> getDocumentModel() {
         return this.documentLazyDataModel;
     }
@@ -142,6 +157,7 @@ public class HelloWorldBacking {
     public void submit() {  
         logger.info("selectedDocumentType: " + selectedDocumentType + "**");
         logger.info("selectedMunicipality: " + selectedMunicipality + "**");
+        logger.info("fullTextSearch: " + fullTextSearch + "**");
         
         documentLazyDataModel.setFilter(filters);
     

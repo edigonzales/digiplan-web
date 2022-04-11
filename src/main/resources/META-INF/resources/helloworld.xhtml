@@ -42,7 +42,6 @@
 
 	                <div class="p-field p-col-12 p-md-3">
 	                    <p:outputLabel for="dokumenttyp">Dokumenttyp</p:outputLabel>
-	                    <!--<p:inputText id="dokumenttyp" />-->
 	                    <p:selectOneMenu id="dokumenttyp" value="#{helloWorldBacking.selectedDocumentType}">
 	                        <f:selectItem itemLabel="" itemValue="#{null}"/>
 	                        <f:selectItems value="#{helloWorldBacking.documentTypes.entrySet()}" var="entry"
@@ -53,8 +52,25 @@
 	                
 	                <div class="p-field p-col-12 p-md-3">
 	                    <p:outputLabel for="rechtsstatus" >Rechtsstatus</p:outputLabel>
-	                    <p:inputText id="rechtsstatus" />
-	                </div>
+                        <p:selectOneMenu id="rechtsstatus" disabled="true" value="#{null}">
+                            <f:selectItem itemLabel="" itemValue="#{null}"/>
+                        </p:selectOneMenu>
+
+	                </div> 
+
+                    <div class="p-field p-col-12 p-md-3">
+                    </div>
+                    
+                    <div class="p-field p-col-12 p-md-3">
+                        <p:outputLabel for="fts">Titel / Stichwort / RRB-Nr.</p:outputLabel>
+                        <p:inputText id="fts" value="#{helloWorldBacking.fullTextSearch}"/>
+                    </div>
+
+                    <div class="p-field p-col-12 p-md-3">
+                    </div>
+
+                    <div class="p-field p-col-12 p-md-3">
+                    </div>
 
                     <div class="p-field p-col-12 p-md-3">
                     </div>
@@ -64,13 +80,12 @@
                     </div>
                     
                     <div class="p-field p-col-12 p-md-3">
-                        <p:commandLink id="reset" process="@this" update="gemeinde dokumenttyp documents_table" action="#{helloWorldBacking.reset}">
+                        <p:commandLink id="reset" process="@this" update="gemeinde dokumenttyp fts documents_table" action="#{helloWorldBacking.reset}">
                            <i class="pi pi-refresh"></i>
                            <span>Suche zurücksetzen</span>
                               <!-- <f:ajax render="searchform" resetValues="true"/>  -->
-                              <p:resetInput target="gemeinde dokumenttyp"/>
+                              <p:resetInput target="gemeinde dokumenttyp fts"/>
                         </p:commandLink>
-                        
                     </div>
 
                     <div class="p-field p-col-12 p-md-3">
@@ -85,7 +100,6 @@
                     </div>
                     
 	                <p:divider />
-	                
 	                
 			        <p:dataTable id="documents_table" var="document" value="#{helloWorldBacking.documentModel}"
 			            stripedRows="true"
