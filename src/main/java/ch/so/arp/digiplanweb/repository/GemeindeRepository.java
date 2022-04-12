@@ -19,7 +19,7 @@ public class GemeindeRepository {
     private JdbcTemplate jdbcTemplate;
         
     public List<Gemeinde> findAll() {
-        String sql = "SELECT * FROM gemeinde ORDER BY aname";
+        String sql = "SELECT * FROM arp_digiplan_pub_v1.gemeinde ORDER BY aname";
         return jdbcTemplate.query(sql, new GemeindeRowMapper());        
     }
 }

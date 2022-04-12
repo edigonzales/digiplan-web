@@ -55,14 +55,14 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	//runtimeOnly 'com.h2database:h2'
-    implementation 'org.orbisgis:h2gis:1.5.0'
-    implementation 'com.h2database:h2:1.4.197'
+    //implementation 'org.orbisgis:h2gis:1.5.0'
+    //implementation 'com.h2database:h2:1.4.197'
     
     implementation 'org.joinfaces:jsf-spring-boot-starter'
     implementation 'org.joinfaces:primefaces-spring-boot-starter'
     implementation group: 'org.webjars.npm', name: 'primeflex', version: '2.0.0'
     	
-	//runtimeOnly 'org.postgresql:postgresql'
+	runtimeOnly 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

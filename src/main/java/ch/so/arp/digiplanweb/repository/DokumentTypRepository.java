@@ -19,7 +19,7 @@ public class DokumentTypRepository {
     private JdbcTemplate jdbcTemplate;
         
     public List<DokumentTyp> findAll() {
-        String sql = "SELECT * FROM dokument_typ ORDER BY dispname";
+        String sql = "SELECT * FROM arp_digiplan_pub_v1.dokument_typ ORDER BY dispname";
         return jdbcTemplate.query(sql, new DokumentTypRowMapper());        
     }
 }

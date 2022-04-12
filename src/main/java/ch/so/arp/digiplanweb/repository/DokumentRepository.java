@@ -29,7 +29,7 @@ public class DokumentRepository {
     public int count(HashMap<String,String> filters) {        
         MapSqlParameterSource params = new MapSqlParameterSource();
 
-        String sql = "SELECT count(*) FROM dokument WHERE 1=1 ";
+        String sql = "SELECT count(*) FROM arp_digiplan_pub_v1.dokument WHERE 1=1 ";
 
         if (filters != null) {
             for (Map.Entry<String, String> entry : filters.entrySet()) {
@@ -39,6 +39,12 @@ public class DokumentRepository {
                 } else if (entry.getKey().equalsIgnoreCase("typ")) {
                     sql += "AND typ = :typ ";
                     params.addValue("typ", entry.getValue());
+                } else if (entry.getKey().equalsIgnoreCase("searchtext")) {
+                    String[] tokens = entry.getValue().trim().split(" ");
+                    for (int i=0; i< tokens.length; i++) {
+                        sql += "AND (searchtext ILIKE :token" + i +") ";
+                        params.addValue("token"+i, "%"+tokens[i].trim()+"%");
+                    }
                 }
             }   
         }
@@ -52,7 +58,7 @@ public class DokumentRepository {
     public List<Dokument> findAll(int limit, int offset, HashMap<String,String> filters) {        
         MapSqlParameterSource params = new MapSqlParameterSource();
 
-        String sql = "SELECT * FROM dokument WHERE 1=1 ";
+        String sql = "SELECT * FROM arp_digiplan_pub_v1.dokument WHERE 1=1 ";
         
         if (filters != null) {
             for (Map.Entry<String, String> entry : filters.entrySet()) {
@@ -62,6 +68,12 @@ public class DokumentRepository {
                 } else if (entry.getKey().equalsIgnoreCase("typ")) {
                     sql += "AND typ = :typ ";
                     params.addValue("typ", entry.getValue());
+                } else if (entry.getKey().equalsIgnoreCase("searchtext")) {
+                    String[] tokens = entry.getValue().trim().split(" ");
+                    for (int i=0; i< tokens.length; i++) {
+                        sql += "AND (searchtext ILIKE :token" + i +") ";
+                        params.addValue("token"+i, "%"+tokens[i].trim()+"%");
+                    }
                 }
             }   
         }
